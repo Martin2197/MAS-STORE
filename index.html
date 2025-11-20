@@ -1,62 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Mas Store</title>
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
-      integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="/style.css" />
-  </head>
+</head>
 
-  <body>
+<body>
     <header>
-      <nav class="navBar">
-        <div class="navBar__left">
-          <img
-            src="/Assets/logo-blanco.png"
-            alt="imagen del local"
-            class="navBar__logo"
-          />
-          <div class="navBar__right">
-            <a href="#" class="navBar__link">Contactos</a>
-            <a href="#" class="navBar__link">ProductoSs</a>
-            <a href="#" class="navBar__link">Otros</a>
-          </div>
-          <button class="navBar__hamburguesa" id="hamburgerBtn">
-            <i class="fa-solid fa-bars"></i>
-          </button>
-        </div>
+        <nav class="navBar">
+            <div class="navBar__left">
+                <img src="/Assets/logo-blanco.png" alt="imagen del local" class="navBar__logo" />
 
-        <div class="navBar__input">
-          <input
-            type="search"
-            class="navBar__search"
-            placeholder="Buscar producto..."
-          />
-          <i
-            class="fa-solid fa-magnifying-glass navbar__search-icon navBar__icono"
-          ></i>
+                <div class="navBar__right">
+                    <a href="#" class="navBar__link">Contactos</a>
+                    <a href="#" class="navBar__link">Productos</a>
+                    <a href="#" class="navBar__link">Sobre Nosotros</a>
+                </div>
+
+                <button class="navBar__hamburguesa" id="hamburgerBtn" aria-label="Abrir Menu">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+            </div>
+
+            <div class="navBar__input">
+                <input type="search" class="navBar__search" placeholder="Buscar producto..." />
+                <i class="fa-solid fa-magnifying-glass navbar__search-icon navBar__input--icono"></i>
+            </div>
+        </nav>
+
+        <!-- Menu Mobile -->
+
+        <div class="navBar__menu" id="mobileMenu">
+            <div class="navBar__menu-container">
+                <button id="close" class="navBar__icono--close">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+              
+                <div class="navBar__group">
+                    <i class="fa-solid fa-address-book navBar__icono"></i>
+                    <a href="#" class="navBar__menu-link">Contactos</a>
+                </div>
+                <div class="navBar__group">
+                    <i class="fa-solid fa-layer-group navBar__icono"></i>
+                    <a href="#" class="navBar__menu-link">Productos</a>
+                </div>
+                <div class="navBar__group">
+                    <i class="fa-solid fa-people-group navBar__icono"></i>
+                    <a href="#" class="navBar__menu-link">Sobre nosotros</a>
+                </div>
+            </div>
         </div>
-      </nav>
-      <div class="navBar__menu" id="mobileMenu">
-        <div class="navBar__menu-container">
-          <a href="#" class="navBar__menu-link">Contactos</a>
-          <a href="#" class="navBar__menu-link">Productos</a>
-          <a href="#" class="navBar__menu-link">Otros</a>
-        </div>
-      </div>
     </header>
 
     <main></main>
@@ -64,4 +66,5 @@
     <footer></footer>
 </body>
 <script type="module" src="/app.js"></script>
+
 </html>

@@ -6,6 +6,7 @@
     margin: auto;
 }
 
+
 :root {
     /* PALETA COLORES */
     --color-primario: #075dba;
@@ -14,6 +15,20 @@
 
     /* TIPOGRAFIA */
     --fuente-de-texto: "Poppins", system-ui, sans-serif;
+    --texto-sm: 14px;
+    --texto-md: 16px;
+    --texto-lg: 18px;
+
+    --titulo-sm: 20px;
+    --titulo-md: 24px;
+    --titulo-lg: 32px;
+
+    /* PESO DE FUENTE TIPOGRAFICA */
+    --font-regular: 400;
+    --font-medium: 500;
+    --font-semibold: 600;
+    --font-bold: 700;
+
 
     /* TEXTOS */
     --texto-principal: #111827;
@@ -24,7 +39,14 @@
 
 /* 2. Layout general (body, main, header, footer) */
 
+body {
+    font-family: var(--fuente-de-texto);
+}
 
+header {
+    position: relative;
+    z-index: 10;
+}
 
 
 
@@ -90,45 +112,61 @@
 }
 
 /* Menú móvil oculto por defecto */
-.navbar__menu {
-  position: fixed;
-  inset: 0; /* top:0; right:0; bottom:0; left:0 */
-  background: rgba(0, 0, 0, 0.4);       /* fondo oscuro */
-  display: none;                        /* oculto */
-  justify-content: flex-end;
-  z-index: 1000;
+.navBar__menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    display: none;
+    z-index: 20;
 }
 
 /* El panel blanco del menú */
-.navbar__menu-container {
-  background: #ffffff;
-  width: 70%;
-  max-width: 280px;
-  height: 100%;
-  padding: 2rem 1.5rem;
+.navBar__menu-container {
+    padding: 15px;
+    gap: 20px;
+    display: flex;
+    flex-direction: column;
+    background-color: #eeeeee;
+    box-shadow: 0 10px 25px var(--color-gris);
+    width: 100%;
 }
 
 /* Links del menú */
-.navbar__menu-link {
-  display: block;
-  margin-bottom: 1rem;
-  color: var(--texto-principal);
-  text-decoration: none;
-  font-weight: 500;
+.navBar__menu-link {
+    display: block;
+    font-weight: var(--font-bold);
+    color: var(--color-primario);
+    text-decoration: none;
+    font-weight: 500;
+    padding: 0.5rem 0;
+    transition: color 0.2s ease, transform 0.2s ease;
 }
+
+.navBar__group {
+    display: flex;
+    text-align: center;
+    gap: 10px;
+    align-items: center;
+}
+
+.navBar__input--icono {
+    color: var(--color-primario);
+}
+
 
 /* Cuando está abierto */
 .navbar__menu--open {
-  display: flex;
+    display: flex;
 }
 
 
 /* MEDIA QUERYS NAVBAR*/
 
 @media (max-width: 768px) {
-  .navbar__menu {
-    display: none !important;
-      }
+    .navbar__menu {
+        display: none !important;
+    }
 
     .navBar__right {
         display: none;
