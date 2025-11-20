@@ -35,6 +35,8 @@
     color: var(--color-secundario);
     align-items: center;
     display: flex;
+    flex-direction: column;
+    padding: 10px;
 }
 
 .navBar__logo {
@@ -47,9 +49,13 @@
 }
 
 .navBar__left {
-    justify-content: start;
+    display: flex;
+    text-align: center;
+    align-items: center;
     margin: 0px;
     color: var(--color-secundario);
+    gap: 200px;
+    margin-bottom: 20px;
 }
 
 .navBar__hamburguesa {
@@ -83,9 +89,47 @@
     outline: none;
 }
 
-/* MEDIA QUERYS */
+/* Menú móvil oculto por defecto */
+.navbar__menu {
+  position: fixed;
+  inset: 0; /* top:0; right:0; bottom:0; left:0 */
+  background: rgba(0, 0, 0, 0.4);       /* fondo oscuro */
+  display: none;                        /* oculto */
+  justify-content: flex-end;
+  z-index: 1000;
+}
+
+/* El panel blanco del menú */
+.navbar__menu-container {
+  background: #ffffff;
+  width: 70%;
+  max-width: 280px;
+  height: 100%;
+  padding: 2rem 1.5rem;
+}
+
+/* Links del menú */
+.navbar__menu-link {
+  display: block;
+  margin-bottom: 1rem;
+  color: var(--texto-principal);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+/* Cuando está abierto */
+.navbar__menu--open {
+  display: flex;
+}
+
+
+/* MEDIA QUERYS NAVBAR*/
 
 @media (max-width: 768px) {
+  .navbar__menu {
+    display: none !important;
+      }
+
     .navBar__right {
         display: none;
         /* ocultar links */
