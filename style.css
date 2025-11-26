@@ -53,6 +53,7 @@ header {
 /* 3. Navbar */
 
 .navBar {
+    position: absolute;
     background-color: var(--color-primario);
     color: var(--color-secundario);
     align-items: center;
@@ -159,6 +160,7 @@ header {
 .navbar__menu--open {
     display: flex;
 }
+
 
 
 /* MEDIA QUERYS NAVBAR*/

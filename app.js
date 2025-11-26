@@ -2,10 +2,16 @@
 
 const hamburgerBtn = document.getElementById("hamburgerBtn");
 const mobileMenu   = document.getElementById("mobileMenu");
+const closeBtn = document.getElementById("close");
 
-hamburgerBtn.addEventListener("click", () => {
+
+function toggleMenu(){
   mobileMenu.classList.toggle("navbar__menu--open");
-});
+}
+
+hamburgerBtn.addEventListener("click", toggleMenu);
+closeBtn.addEventListener("click", toggleMenu);
+
 
 // Cerrar el menú si el usuario toca fuera del panel
 mobileMenu.addEventListener("click", (e) => {
