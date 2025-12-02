@@ -3,7 +3,7 @@
 * {
     box-sizing: border-box;
     padding: 0;
-    margin: auto;
+    margin: 0;
 }
 
 
@@ -45,44 +45,49 @@ body {
 
 header {
     position: relative;
-    z-index: 10;
 }
 
 
 
 /* 3. Navbar */
 
+/* NAVBAR BASE (MOBILE) */
+
+/* NAVBAR BASE (MOBILE) */
+
 .navBar {
-    position: absolute;
     background-color: var(--color-primario);
     color: var(--color-secundario);
-    align-items: center;
     display: flex;
     flex-direction: column;
-    padding: 10px;
+    padding: 10px 14px;
+    gap: 10px;
 }
 
+/* fila con logo + hamburguesa */
+.navBar__left {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    /* logo izquierda, hamburguesa derecha */
+    width: 100%;
+    color: var(--color-secundario);
+}
+
+/* logo */
 .navBar__logo {
     max-height: 40px;
     width: auto;
 }
 
+/* links escondidos en mobile */
 .navBar__right {
-    justify-content: end;
-}
-
-.navBar__left {
-    display: flex;
-    text-align: center;
-    align-items: center;
-    margin: 0px;
-    color: var(--color-secundario);
-    gap: 200px;
-    margin-bottom: 20px;
-}
-
-.navBar__hamburguesa {
     display: none;
+}
+
+/* botón hamburguesa visible en mobile */
+.navBar__hamburguesa {
+    display: inline-flex;
     background: none;
     border: none;
     cursor: pointer;
@@ -91,15 +96,110 @@ header {
 }
 
 .navBar__hamburguesa i {
-    color: var(--color-secundario);
-    font-size: 20px;
+    font-size: 22px;
 }
 
+/* buscador debajo, casi a lo ancho */
 .navBar__input {
+    width: 100%;
+    max-width: 460px;
+    margin: 0 auto;
+    padding: 8px 12px;
     border-radius: 10px;
-    color: var(--color-primario);
-    padding: 10px;
     background-color: var(--color-secundario);
+    color: var(--color-primario);
+
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.navBar__search {
+    border: none;
+    outline: none;
+    flex: 1;
+    font-size: var(--texto-md);
+}
+
+.navBar__input--icono {
+    color: var(--color-primario);
+}
+
+/* MENÚ MOBILE (overlay) */
+.navBar__menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+
+    z-index: 1000;
+    background: rgba(0, 0, 0, 0.25);
+
+    opacity: 0;
+    transform: translateY(-10px);
+    pointer-events: none;
+    transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+/* panel blanco */
+.navBar__menu-container {
+    margin-top: 70px;
+    padding: 8px 16px 20px;
+    gap: 16px;
+    display: flex;
+    flex-direction: column;
+    background-color: #eeeeee;
+    box-shadow: 0 10px 25px var(--color-gris);
+    width: 100%;
+    max-width: 400px;
+    border-radius: 12px;
+    align-items: center;
+}
+
+.navBar__menu-btn {
+    width: 100%;
+    justify-content: end;
+    display: flex;
+}
+
+/* links menú */
+.navBar__menu-link {
+    display: block;
+    color: var(--color-primario);
+    text-decoration: none;
+    font-weight: var(--font-medium);
+    padding: 0.5rem 0;
+}
+
+.navBar__group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.navBar__group:hover {
+    background-color: rgb(159, 159, 245);
+    cursor: pointer;
+}
+
+/* menú abierto */
+.navBar__menu--open {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+.navBar__close {
+    color: var(--color-primario);
+    font-size: var(--texto-lg);
 
 }
 
@@ -107,79 +207,77 @@ header {
     color: var(--color-primario);
 }
 
-.navBar__search {
+.navBar__icono--close {
     border: none;
     outline: none;
+    cursor: pointer;
 }
-
-/* Menú móvil oculto por defecto */
-.navBar__menu {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    width: 100%;
-    display: none;
-    z-index: 20;
-}
-
-/* El panel blanco del menú */
-.navBar__menu-container {
-    padding: 15px;
-    gap: 20px;
-    display: flex;
-    flex-direction: column;
-    background-color: #eeeeee;
-    box-shadow: 0 10px 25px var(--color-gris);
-    width: 100%;
-}
-
-/* Links del menú */
-.navBar__menu-link {
-    display: block;
-    font-weight: var(--font-bold);
-    color: var(--color-primario);
-    text-decoration: none;
-    font-weight: 500;
-    padding: 0.5rem 0;
-    transition: color 0.2s ease, transform 0.2s ease;
-}
-
-.navBar__group {
-    display: flex;
-    text-align: center;
-    gap: 10px;
-    align-items: center;
-}
-
-.navBar__input--icono {
-    color: var(--color-primario);
-}
-
-
-/* Cuando está abierto */
-.navbar__menu--open {
-    display: flex;
-}
-
-
 
 /* MEDIA QUERYS NAVBAR*/
 
-@media (max-width: 768px) {
-    .navbar__menu {
-        display: none !important;
+/* TABLET / DESKTOP */
+@media (min-width: 768px) {
+    .navBar {
+        flex-direction: row;
+        align-items: center;
+        padding: 10px 32px;
+        gap: 32px;
+    }
+
+    /* logo + links a la izquierda */
+    .navBar__left {
+        width: auto;
+        margin-bottom: 0;
+        gap: 32px;
+    }
+
+    /* MOSTRAR links */
+    .navBar__right {
+        display: flex;
+        align-items: center;
+        gap: 32px;
+    }
+
+    .navBar__link {
+        font-size: var(--texto-md);
+        font-weight: var(--font-medium);
+        text-decoration: none;
+        color: var(--color-secundario);
+        transition: opacity 0.2s ease, transform 0.2s ease;
+    }
+
+    .navBar__link:hover {
+        opacity: 0.85;
+        transform: translateY(-1px);
+    }
+
+    /* buscador a la derecha del todo */
+    .navBar__input {
+        max-width: 420px;
+        margin: 0 0 0 auto;
+        /* empuja el buscador a la derecha */
+        border-radius: 999px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    /* ocultar hamburguesa en pantallas grandes */
+    .navBar__hamburguesa {
+        display: none;
+    }
+}
+
+/* DESKTOP GRANDE (opcional) */
+@media (min-width: 1024px) {
+    .navBar {
+        padding: 10px 48px;
+    }
+
+    .navBar__input {
+        max-width: 500px;
     }
 
     .navBar__right {
-        display: none;
-        /* ocultar links */
-    }
-
-    .navBar__hamburguesa {
-        display: inline-flex;
-        /* mostrar botón */
-        align-items: center;
-        justify-content: center;
+        gap: 40px;
     }
 }
 
