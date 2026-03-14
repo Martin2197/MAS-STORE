@@ -1,5 +1,91 @@
-// LOGICA PARA ABRIR Y CERRAR EL MENU DE BOTON DE HAMBURGUESA // 
+let productos = [];
 
+const filtroMarca = document.getElementById("filtroMarca");
+const filtroCategoria = document.getElementById("filtroCategoria");
+
+function aplicarFiltros(){
+
+  const marca = filtroMarca.value;
+  const categoria = filtroCategoria.value;
+
+  const filtrados = productos.filter(p => {
+
+    const marcaOK = marca === "todas" || p.marca === marca;
+    const categoriaOK = categoria === "todas" || p.categoria === categoria;
+
+    return marcaOK && categoriaOK;
+
+  });
+
+  renderProductos(filtrados);
+
+}
+
+filtroMarca.addEventListener("change", aplicarFiltros);
+filtroCategoria.addEventListener("change", aplicarFiltros);
+
+async function cargarProductos() {
+
+  const url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTvr7-LdORSUwxmZceeoMyO5q0h4CPKc0KBL5eR8vLpqodDb1rPEQK6IMMJUtYIc6bUmiW8fKe-xbMr/pub?output=csv";
+
+  const response = await fetch(url);
+  const data = await response.text();
+
+  const filas = data.split("\n").slice(1);
+
+
+
+  productos = filas
+    .filter(fila => fila.trim() !== "")
+    .map(fila => {
+      productos = productos.filter(p => p.activo);
+      const col = fila.split(",");
+
+      return {
+        nombre: col[0].trim(),
+        marca: col[1].trim(),
+        categoria: col[2].trim(),
+        precioUSD: Number(col[3]),
+        precioARS: Number(col[4]),
+        imagen: col[5].trim(),
+        stock: Number(col[6]),
+        activo: col[7].trim().toLowerCase() === "true"
+      };
+
+    });
+
+    renderProductos(productos);
+    generarFiltros();
+
+  } 
+
+cargarProductos();
+
+function generarFiltros() {
+
+  const marcas = [...new Set(productos.map(p => p.marca))];
+  const categorias = [...new Set(productos.map(p => p.categoria))];
+
+  const filtroMarca = document.getElementById("filtroMarca");
+  const filtroCategoria = document.getElementById("filtroCategoria");
+
+  marcas.forEach(marca => {
+    const option = document.createElement("option");
+    option.value = marca;
+    option.textContent = marca;
+    filtroMarca.appendChild(option);
+  });
+
+  categorias.forEach(cat => {
+    const option = document.createElement("option");
+    option.value = cat;
+    option.textContent = cat;
+    filtroCategoria.appendChild(option);
+  });
+
+}
+
+// LOGICA PARA ABRIR Y CERRAR EL MENU DE BOTON DE HAMBURGUESA //
 const hamburgerBtn = document.getElementById("hamburgerBtn");
 const mobileMenu = document.getElementById("mobileMenu");
 const closeBtn = document.getElementById("close");
@@ -20,46 +106,12 @@ mobileMenu.addEventListener("click", (e) => {
   }
 });
 
-
-// ARRAY DE PRODUCTOS // 
-
-const productos = [
-  {
-    id: 1,
-    nombre: "iPhone 13",
-    marca: "Apple",
-    categoria: "Celulares",
-    precio: 800,
-  },
-  {
-    id: 2,
-    nombre: "iPhone 15",
-    marca: "Apple",
-    categoria: "Celulares",
-    precio: 1100,
-  },
-  {
-    id: 3,
-    nombre: "Galaxy S23",
-    marca: "Samsung",
-    categoria: "Celulares",
-    precio: 900,
-  },
-  {
-    id: 4,
-    nombre: "Redmi Note 13",
-    marca: "Xiaomi",
-    categoria: "Celulares",
-    precio: 450,
-  },
-];
-
 // LOGICA PARA MOSTRAR PRODUCTOS EN EL MAIN // 
 
-const resultadosContainer = document.getElementById("resultados");
+const resultadosContainer = document.getElementById("productos");
 
 function renderProductos(lista) {
-  // Vaciar lo que haya
+
   resultadosContainer.innerHTML = "";
 
   if (lista.length === 0) {
@@ -67,20 +119,54 @@ function renderProductos(lista) {
     return;
   }
 
-  // Crear una tarjeta simple por producto
   lista.forEach((producto) => {
+
     const card = document.createElement("article");
     card.classList.add("producto-card");
 
+    // 👉 lógica del stock
+    let estadoStock = "";
+
+    if(producto.stock === 0){
+      estadoStock = `<span class="stock stock--rojo">Sin stock</span>`;
+    }
+    else if(producto.stock <= 3){
+      estadoStock = `<span class="stock stock--amarillo">Últimas unidades</span>`;
+    }
+    else{
+      estadoStock = `<span class="stock stock--verde">Disponible</span>`;
+    }
+
     card.innerHTML = `
-      <h3 class="producto-card__titulo">${producto.nombre}</h3>
-      <p class="producto-card__marca">${producto.marca}</p>
-      <p class="producto-card__categoria">${producto.categoria}</p>
-      <p class="producto-card__precio">USD ${producto.precio}</p>
+
+      <img src="Assets/${producto.imagen}" alt="${producto.nombre}" class="producto-card__img">
+
+      <div class="producto-card__info">
+
+        <h3 class="producto-card__titulo">${producto.nombre}</h3>
+
+        <p class="producto-card__marca">${producto.marca}</p>
+
+        <p class="producto-card__categoria">${producto.categoria}</p>
+
+        <p class="producto-card__precio-usd">USD $${producto.precioUSD}</p>
+        
+        <p class="producto-card__precio-ars">$${producto.precioARS.toLocaleString()} ARS</p>
+
+        <p class="producto-card__stock">${estadoStock}</p>
+
+      </div>
+
+      <a href="https://wa.me/3795028387?text=Hola!%20Quería%20consultar%20por%20el%20${producto.nombre}" 
+      target="_blank" 
+      class="producto-card__btn">Consultar</a>
+
     `;
 
     resultadosContainer.appendChild(card);
+
   });
+
 }
 
 // Mostrar todos al inicio
@@ -91,22 +177,26 @@ renderProductos(productos);
 const inputBusqueda = document.querySelector(".navBar__search");
 
 inputBusqueda.addEventListener("input", () => {
-  const termino = inputBusqueda.value.trim().toLowerCase();
 
-  // Si no escribió nada, mostramos todos
-  if (termino === "") {
+  const termino = inputBusqueda.value.toLowerCase().trim();
+
+  if (!termino) {
     renderProductos(productos);
     return;
   }
 
-  // Filtrar productos por nombre, marca o categoría
-  const filtrados = productos.filter((producto) => {
-    return (
-      producto.nombre.toLowerCase().includes(termino) ||
-      producto.marca.toLowerCase().includes(termino) ||
-      producto.categoria.toLowerCase().includes(termino)
-    );
+  const filtrados = productos.filter(producto => {
+
+    const texto = `
+      ${producto.nombre}
+      ${producto.marca}
+      ${producto.categoria}
+    `.toLowerCase();
+
+    return texto.includes(termino);
+
   });
 
   renderProductos(filtrados);
+
 });

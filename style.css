@@ -46,12 +46,45 @@ body {
 header {
     position: relative;
 }
+.footer__bottom{
+  text-align:center;
+  padding:12px;
+  background:#0f4ea0;
+  color:white;
+  font-size:13px;
+}
+
+.about{
+  padding:70px 20px;
+  background:#f8fafc;
+  border-top:1px solid #e5e7eb;
+}
+
+.about__container{
+  max-width:1000px;
+  margin:auto;
+  text-align:center;
+}
 
 footer {
     background-color: var(--color-primario);
+    padding: 20px;
     display: flex;
-    padding: 10px;
-    gap: 10px;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.footer__container{
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+}
+
+.footer__container a{
+    color:white;
+    font-size:20px;
 }
 
 .navBar__logo--footer {
@@ -66,11 +99,82 @@ footer {
     font-size: var(--texto-sm);
 }
 
-/* 3. Navbar */
 
-/* NAVBAR BASE (MOBILE) */
+/*CARD BENEFICIOS */
 
-/* NAVBAR BASE (MOBILE) */
+.about__features{
+  display:flex;
+  justify-content:center;
+  gap:24px;
+  margin-top:30px;
+  flex-wrap:wrap;
+}
+
+.feature{
+  background:white;
+  padding:16px 20px;
+  border-radius:12px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  box-shadow:0 8px 20px rgba(0,0,0,0.06);
+  transition:all .2s ease;
+}
+
+.feature:hover{
+  transform:translateY(-3px);
+  box-shadow:0 12px 28px rgba(0,0,0,0.12);
+}
+
+.feature i{
+  color:var(--color-primario);
+  font-size:18px;
+}
+
+/*     FOOTER   */
+.footer{
+  background:var(--color-primario);
+  color:white;
+  padding:40px 20px;
+}
+
+.footer__container{
+  max-width:1100px;
+  margin:auto;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  gap:30px;
+}
+
+.footer__col h3{
+  margin-bottom:10px;
+  font-size:18px;
+}
+
+.footer__col p{
+  font-size:14px;
+  opacity:.9;
+  margin-bottom:4px;
+}
+
+.footer__social{
+  display:flex;
+  gap:12px;
+}
+
+.footer__social a{
+  color:white;
+  font-size:22px;
+  transition:transform .2s;
+}
+
+.footer__social a:hover{
+  transform:scale(1.15);
+}
+
+.footer__logo img{
+  max-width:120px;
+}
 
 .navBar {
     background-color: var(--color-primario);
@@ -230,6 +334,29 @@ footer {
     cursor: pointer;
 }
 
+.navBar__search{
+    background:none;
+}
+
+.navBar__search::placeholder{
+    color:#9ca3af;
+}
+
+.navBar__menu-container{
+    animation: menuFade .25s ease;
+}
+
+@keyframes menuFade{
+    from{
+        transform:translateY(-20px);
+        opacity:0;
+    }
+    to{
+        transform:translateY(0);
+        opacity:1;
+    }
+}
+
 /* MEDIA QUERYS NAVBAR*/
 
 /* TABLET / DESKTOP */
@@ -277,10 +404,59 @@ footer {
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     }
 
+    
+
     /* ocultar hamburguesa en pantallas grandes */
     .navBar__hamburguesa {
         display: none;
     }
+}
+
+
+
+.about{
+  padding:60px 20px;
+  background:#f8fafc;
+}
+
+.about__container{
+  max-width:1100px;
+  margin:auto;
+  display:grid;
+  grid-template-columns:1fr;
+  gap:40px;
+}
+
+.about__text h2{
+  font-size:28px;
+  margin-bottom:12px;
+}
+
+.about__text p{
+  color:#4b5563;
+  margin-bottom:10px;
+  line-height:1.6;
+}
+
+.about__features{
+  display:flex;
+  gap:20px;
+  flex-wrap:wrap;
+}
+
+.feature{
+  background:white;
+  padding:16px;
+  border-radius:10px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  box-shadow:0 6px 16px rgba(0,0,0,0.08);
+}
+
+.feature i{
+  color:var(--color-primario);
+  font-size:18px;
 }
 
 /* DESKTOP GRANDE (opcional) */
@@ -304,20 +480,36 @@ footer {
 
 /* 5. Listado productos */
 
-.productos {
-    padding: 20px;
-    max-width: 1100px;
-    margin: 0 auto;
-    display: grid;
-    gap: 16px;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+.productos{
+    padding:40px 20px;
+    max-width:1100px;
+    margin:0 auto;
+
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:24px;
 }
 
 .producto-card {
     background: #ffffff;
-    border-radius: 12px;
-    padding: 12px 16px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    border-radius: 14px;
+    padding: 16px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+}
+
+.producto-card__info{
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+}
+
+.producto-card:hover{
+    transform: translateY(-4px);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.12);
 }
 
 .producto-card__titulo {
@@ -333,11 +525,96 @@ footer {
     color: var(--texto-secundario);
 }
 
+.producto-card__precio{
+    font-weight:600;
+    margin-top:4px;
+}
 
+.producto-card__precio-usd{
+  font-size:14px;
+  font-weight:600;
+  color:#111827;
+}
 
-/* 6. Detalle producto */
+.producto-card__precio-ars{
+  font-size:13px;
+  color:#4b5563;
+}
 
+.producto-card__img{
+    width:100%;
+    height:160px;
+    object-fit:contain;
+    margin-bottom:12px;
+    transition:transform .2s ease;
+}
 
+.producto-card:hover .producto-card__img{
+    transform:scale(1.05);
+}
 
+.producto-card:hover{
+    transform:translateY(-4px);
+    box-shadow:0 12px 28px rgba(0,0,0,0.12);
+}
 
-/* 7. Media queries (mobile / tablet / desktop) */
+.producto-card__img{
+    width:100%;
+    height:150px;
+    object-fit:contain;
+    margin-bottom:10px;
+}
+
+.producto-card__btn{
+    margin-top: 10px;
+    padding: 8px;
+    border:none;
+    background:var(--color-primario);
+    color:white;
+    border-radius:8px;
+    cursor:pointer;
+    font-size:14px;
+    text-decoration: none;
+    text-align: center;
+}
+
+.producto-card__btn:hover{
+    opacity:.9;
+}
+
+.filtros{
+  max-width:1100px;
+  margin:20px auto;
+  display:flex;
+  gap:20px;
+}
+
+.filtro select{
+  padding:6px 10px;
+  border-radius:8px;
+}
+
+/*       STOCK          */
+
+.stock{
+  font-size:12px;
+  font-weight:600;
+  padding:4px 8px;
+  border-radius:6px;
+  width:fit-content;
+}
+
+.stock--verde{
+  background:#dcfce7;
+  color:#166534;
+}
+
+.stock--amarillo{
+  background:#fef9c3;
+  color:#854d0e;
+}
+
+.stock--rojo{
+  background:#fee2e2;
+  color:#991b1b;
+}
