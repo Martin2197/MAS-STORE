@@ -6,18 +6,53 @@ import { inicializarMenu } from "./menu.js";
 import { obtenerTerminoBusqueda } from "./busqueda.js";
 
 let productos = [];
+let paginaActual = 1;
+const productosPorPagina = 8;
 
-const filtroMarca = document.getElementById("filtroMarca");
-const filtroCategoria = document.getElementById("filtroCategoria");
-const inputBusqueda = document.querySelector(".navBar__search");
+let inputBusqueda;
+let btnVerMas;
+let filtroMarca;
+let filtroCategoria;
 
-function actualizarVista() {
+function obtenerProductosPaginados(lista) {
+  const fin = paginaActual * productosPorPagina;
+  return lista.slice(0, fin);
+}
+
+function obtenerProductosFiltrados() {
   const marca = filtroMarca.value;
   const categoria = filtroCategoria.value;
   const termino = obtenerTerminoBusqueda(inputBusqueda);
 
-  const productosFiltrados = filtrarProductos(productos, marca, categoria, termino);
-  renderProductos(productosFiltrados);
+  return filtrarProductos(productos, marca, categoria, termino);
+}
+
+function actualizarBotonVerMas(productosVisibles, productosFiltrados) {
+  if (!btnVerMas) return;
+
+  if (productosVisibles.length >= productosFiltrados.length) {
+    btnVerMas.style.display = "none";
+  } else {
+    btnVerMas.style.display = "inline-block";
+  }
+}
+
+function renderVista() {
+  const productosFiltrados = obtenerProductosFiltrados();
+  const productosVisibles = obtenerProductosPaginados(productosFiltrados);
+
+  renderProductos(productosVisibles);
+  actualizarBotonVerMas(productosVisibles, productosFiltrados);
+}
+
+function actualizarVista() {
+  paginaActual = 1;
+  renderVista();
+}
+
+function mostrarMasProductos() {
+  paginaActual++;
+  renderVista();
 }
 
 async function iniciar() {
@@ -25,14 +60,24 @@ async function iniciar() {
     mostrarSkeleton();
     inicializarMenu();
 
+    filtroMarca = document.getElementById("filtroMarca");
+    filtroCategoria = document.getElementById("filtroCategoria");
+    inputBusqueda = document.querySelector(".navBar__search");
+    btnVerMas = document.getElementById("btnVerMas");
+
     productos = await obtenerProductos();
 
     generarFiltros(productos, filtroMarca, filtroCategoria);
-    renderProductos(productos);
+
+    renderVista();
 
     filtroMarca.addEventListener("change", actualizarVista);
     filtroCategoria.addEventListener("change", actualizarVista);
     inputBusqueda.addEventListener("input", actualizarVista);
+
+    if (btnVerMas) {
+      btnVerMas.addEventListener("click", mostrarMasProductos);
+    }
   } catch (error) {
     console.error("Error al cargar productos:", error);
     document.getElementById("productos").innerHTML =

@@ -3,8 +3,14 @@ export function renderProductos(lista) {
 
   container.innerHTML = "";
 
-  if (lista.length === 0) {
-    container.innerHTML = "<p>No se encontraron productos.</p>";
+  if(lista.length === 0){
+
+    container.innerHTML = `
+    <div class="empty-state">
+      <h3>No se encontraron productos</h3>
+      <p>Prueba cambiando los filtros o el buscador</p>
+    </div>
+    `;
     return;
   }
 
@@ -23,12 +29,8 @@ export function renderProductos(lista) {
     }
 
     card.innerHTML = `
-      <img 
-        loading="lazy"
-        src="Assets/${producto.imagen}" 
-        alt="${producto.nombre}" 
-        class="producto-card__img"
-      >
+      <img loading="lazy" decoding="async" src="Assets/${producto.imagen}" 
+      alt="${producto.nombre}" class="producto-card__img">
 
       <div class="producto-card__info">
         <h3 class="producto-card__titulo">${producto.nombre}</h3>
